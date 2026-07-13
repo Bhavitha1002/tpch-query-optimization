@@ -6,7 +6,7 @@ Co-authored with Kobe Richards for CS 542 (Database Management Systems).
 
 ## Summary
 
-TPC-H is a standard decision-support benchmark modeling a supplier/customer/order business (customers, orders, suppliers, parts, regions — 8 tables, 22 analytical queries). Because SQLite has no automatic subquery decorrelation, it executes correlated subqueries exactly as written — making it a clean environment to observe the *real* cost of query structure without an optimizer masking it.
+TPC-H is a standard decision-support benchmark modeling a supplier/customer/order business (customers, orders, suppliers, parts, regions, 8 tables, 22 analytical queries). Because SQLite has no automatic subquery decorrelation, it executes correlated subqueries exactly as written, making it a clean environment to observe the *real* cost of query structure without an optimizer masking it.
 
 ## What I did
 
@@ -27,14 +27,14 @@ Q22 went from a 40-minute query to under 0.2 seconds by computing a repeated ave
 
 ## Key finding
 
-Query **structure** predicts runtime far better than data size. Every extreme outlier (Q17, Q20, Q22) shared the same root cause: a correlated subquery being re-evaluated once per outer row, turning an O(n) problem into O(n²) or worse. The fix in each case followed the same principle — compute once, reuse many times — via CTEs and derived tables that materialize an aggregate before joining, instead of recalculating it inside a nested loop.
+Query **structure** predicts runtime far better than data size. Every extreme outlier (Q17, Q20, Q22) shared the same root cause: a correlated subquery being re-evaluated once per outer row, turning an O(n) problem into O(n²) or worse. The fix in each case followed the same principle, compute once, reuse many times, via CTEs and derived tables that materialize an aggregate before joining, instead of recalculating it inside a nested loop.
 
-This is the difference between "the database is slow" and "the query is slow" — and it's the first thing worth checking before assuming a system needs more hardware.
+This is the difference between "the database is slow" and "the query is slow", and it's the first thing worth checking before assuming a system needs more hardware.
 
 ## Files
 
-- [`optimized_queries.sql`](./optimized_queries.sql) — All 22 queries with original vs. rewritten versions and measured runtimes inline
-- [`CS_542_Project_Report.pdf`](./CS_542_Project_Report.pdf) — Full writeup: methodology, related work, structural classification, and choke-point analysis
+- [`optimized_queries.sql`](./optimized_queries.sql) - All 22 queries with original vs. rewritten versions and measured runtimes inline
+- [`CS_542_Project_Report.pdf`](./Project_Report.pdf) - Full writeup: methodology, related work, structural classification, and choke-point analysis
 
 ## Tools
 
@@ -42,4 +42,4 @@ SQLite 3.x, SQL (CTEs, window functions, query plan analysis), TPC-H `dbgen`/`qg
 
 ## References
 
-Builds on choke-point analysis from Boncz, Neumann & Erling (*TPC-H Analyzed*, TPCTC 2014) and Dreseler et al. (*Quantifying TPC-H Choke Points*, VLDB 2020) — full citations in the report.
+Builds on choke-point analysis from Boncz, Neumann & Erling (*TPC-H Analyzed*, TPCTC 2014) and Dreseler et al. (*Quantifying TPC-H Choke Points*, VLDB 2020), full citations in the report.
