@@ -34,7 +34,7 @@ This is the difference between "the database is slow" and "the query is slow", a
 ## Files
 
 - [`optimized_queries.sql`](./optimized_queries.sql) - All 22 queries with original vs. rewritten versions and measured runtimes inline
-- [`CS_542_Project_Report.pdf`](./Project_Report.pdf) - Full writeup: methodology, related work, structural classification, and choke-point analysis
+- [`CS_542_Project_Report.pdf`](./Project_Report.docx) - Full writeup: methodology, related work, structural classification, and choke-point analysis
 
 ## Tools
 
