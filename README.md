@@ -35,6 +35,15 @@ This is the difference between "the database is slow" and "the query is slow", a
 
 - [`optimized_queries.sql`](./optimized_queries.sql) - All 22 queries with original vs. rewritten versions and measured runtimes inline
 - [`Project_Report.docx`](./Project_Report.docx) - Full writeup: methodology, related work, structural classification, and choke-point analysis
+- 
+## Reproducing this
+
+The TPC-H database (~1GB at SF1) isn't included in this repo since it's a synthetic, regeneratable benchmark rather than original data. To reproduce:
+
+1. Download the TPC-H tools (`dbgen`/`qgen`) from the [official TPC-H page](https://www.tpc.org/tpch/)
+2. Generate data at scale factor 1: `./dbgen -s 1`
+3. Load the generated `.tbl` files into SQLite using the standard TPC-H schema (8 tables: LINEITEM, ORDERS, CUSTOMER, PART, PARTSUPP, SUPPLIER, NATION, REGION)
+4. Run the queries in [`optimized_queries.sql`](./optimized_queries.sql) against the resulting database using the SQLite CLI with `.timer on`
 
 ## Tools
 
